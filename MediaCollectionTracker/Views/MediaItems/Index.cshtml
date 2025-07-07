@@ -1,0 +1,38 @@
+@model IEnumerable<MediaCollectionTracker.Models.MediaItem>
+
+@{
+    ViewData["Title"] = "Media Items";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Index" method="get">
+    <input type="text" name="searchString" class="form-control" placeholder="Search by title, creator or genre" />
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+    <a href="@Url.Action("Create")" class="btn btn-success ml-2">Add New</a>
+</form>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Title</th><th>Creator</th><th>Release Date</th><th>Genre</th><th>Type</th><th>Status</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.Creator</td>
+            <td>@item.ReleaseDate?.ToShortDateString()</td>
+            <td>@item.Genre</td>
+            <td>@item.MediaType</td>
+            <td>@item.Status</td>
+            <td>
+                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-sm btn-primary">Edit</a>
+                <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
